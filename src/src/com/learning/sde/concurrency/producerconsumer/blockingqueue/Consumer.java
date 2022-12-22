@@ -11,7 +11,8 @@ public class Consumer implements Runnable {
     @Override
     public void run() {
         while (true) {
-            queue.take();
+            String t = queue.take();
+            System.out.println("Time consumed: " + t);
         }
     }
 }

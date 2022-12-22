@@ -27,6 +27,7 @@ public class Cache {
         if (key != null) {
             evictionPolicy.access(key);
         }
+        System.out.println("Got value: " + val);
         return val;
     }
 }

@@ -6,8 +6,8 @@ import java.util.Queue;
 public class MyBlockingQ {
 
     private Queue<String> queue;
-    private Object notEmpty = new Object();
-    private Object notFull = new Object();
+    private final Object notEmpty = new Object();
+    private final Object notFull = new Object();
     private int size;
 
     public MyBlockingQ(int size) {
@@ -15,8 +15,8 @@ public class MyBlockingQ {
         this.size = size;
     }
 
-    public synchronized void put(String s) {
-        System.out.println("Thread: " + Thread.currentThread().getName());
+    public void put(String s) {
+        System.out.println("Put Thread: " + Thread.currentThread().getName());
         try{
             while (queue.size() == size) {
                 synchronized (notFull) {
@@ -32,15 +32,16 @@ public class MyBlockingQ {
         }
     }
 
-    public synchronized void take() {
-        System.out.println("Thread: " + Thread.currentThread().getName());
+    public String take() {
+        System.out.println("Take Thread: " + Thread.currentThread().getName());
+        String t = null;
         try {
             synchronized (notEmpty) {
                 while (queue.isEmpty()) {
                     notEmpty.wait();
                 }
             }
-            String t = queue.remove();
+            t = queue.remove();
             System.out.println("Consumed: " + t);
             synchronized (notFull) {
                 notFull.notifyAll();
@@ -48,5 +49,6 @@ public class MyBlockingQ {
         } catch (InterruptedException ex) {
             System.out.println("Interrupted Exception put.");
         }
+        return t;
     }
 }

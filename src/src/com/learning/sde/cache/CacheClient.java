@@ -12,7 +12,7 @@ public class CacheClient {
         cache.add("6", "six");
         cache.add("7", "seven");
         cache.get("6");
-        cache.get("4");
+        cache.get("1");
 
     }
 }

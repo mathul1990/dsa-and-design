@@ -34,13 +34,32 @@ public class LongestSubStrWithoutRepeatingChars {
         Set<Character> set = new HashSet<>();
         for (; end < string.length(); end++) {
             if (set.contains(string.charAt(end))) {
-                set.remove(string.charAt(end));
+                set.remove(string.charAt(end)); // Wrong
                 start++;
             }
             set.add(string.charAt(end));
             max = Math.max(max, end-start+1);
         }
         return max;
+    }
+
+    public int lengthOfLongestSubstringFeb2024(String s) {
+        Set<Character> set = new HashSet<>();
+        int n = s.length();
+        int start = 0;
+        int end = 0;
+        int max = Integer.MIN_VALUE;
+        while (end < n) {
+            char ch = s.charAt(end);
+            while (set.contains(ch) && start<end) {
+                set.remove(s.charAt(start));
+                start++;
+            }
+            max = Math.max(max, end-start+1);
+            set.add(ch);
+            end++;
+        }
+        return Math.max(max, 0);
     }
 
     public static void main(String[] args) {

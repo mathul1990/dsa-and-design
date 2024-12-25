@@ -18,6 +18,10 @@ public class DP {
         return fibRecursion(n-1) + fibRecursion(n-2);
     }
 
+    /**
+     * There are overlapping sub problems. Once a sub problem is solved, store it somewhere so that
+     * it does no have to be computed again.
+     */
     public int fibMemoization(int n, int[] dp) {
         if (n<2) {
             return n;
@@ -95,6 +99,12 @@ public class DP {
      * f(2) means max sum of nonAdj subsequences from indices 0 to 2.
      *
      * The idea is to find the maximum sum among f(0), f(1) .... f(n-1).
+     *
+     * First thought is to find all subsequences. This is similar to the pick/not-pick problem for subsequences.
+     * If an index i is picked, i-1 can't be picked, since adjacent elements are not allowed. So pick i-2.
+     * If i is not picked, you can pick i-1.
+     *
+     * For memoizing check if recursion has overlapping sub problems.
      */
     public int nonAdjacentSum(int[] arr, int[] dp, int i) {
         if (i == 0) {
